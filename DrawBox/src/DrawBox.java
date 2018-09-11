@@ -1,10 +1,13 @@
 public class DrawBox {
 
     public static void main(String[] args){
-        int a = 1000;
-        int b = 1000;
+        int a = 1;
+        int b = 1;
 
         drawBox(a,b);
+        if((a*b) == 1){
+                System.out.println("\nYou have printed " + (a*b) + " box!");
+        }
         System.out.println("\nYou have printed " + (a*b) + " boxes!");
     }
     private static void drawBox(int columns, int rows) {
