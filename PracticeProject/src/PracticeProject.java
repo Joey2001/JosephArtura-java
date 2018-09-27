@@ -1,4 +1,4 @@
-public class PractiveProject {
+public class PracticeProject {
     private static final int COLUMNS = 5;
     private static final int ROWS = 4;
     public static void main(String[] args) {
