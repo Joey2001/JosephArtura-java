@@ -12,7 +12,21 @@ public class RocketShip {
         Cone();
     }
     public static void Cone() {
-
+        for(int i = 1; i < COLUMN; i++){
+            for(int j = i; j < COLUMN; j++){
+                System.out.print(" ");
+            }
+            for(int k = 1; k < i; k++){
+                System.out.print("/");
+            }
+            if(i != 1){
+                System.out.print("**");
+            }
+            for(int l = 1; l < i; l++){
+                System.out.print("\\");
+            }
+            System.out.println();
+        }
     }
     public static void TopBody() {
 
@@ -22,9 +36,10 @@ public class RocketShip {
     }
     public static void line() {
         System.out.print("+");
-        for(int i = 0; i < COLUMN; i++){
+        for(int i = 0; i < COLUMN-1; i++){
             System.out.print("=*");
         }
         System.out.print("+");
+        System.out.println();
     }
 }
