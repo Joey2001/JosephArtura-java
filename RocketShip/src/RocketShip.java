@@ -1,45 +1,72 @@
 public class RocketShip {
-    public static final int COLUMN = 6;
+    private static final int COLUMN = 7;
     public static void main(String[] args) {
         Cone();
         line();
-        TopBody();
-        BottomBody();
+        TopHalf();
+        BottomHalf();
         line();
-        BottomBody();
-        TopBody();
+        BottomHalf();
+        TopHalf();
         line();
         Cone();
     }
-    public static void Cone() {
-        for(int i = 1; i < COLUMN; i++){
-            for(int j = i; j < COLUMN; j++){
-                System.out.print(" ");
+    private static void Cone() {
+        for (int y = 1; y < COLUMN * 2; y++) {
+            for (int i = COLUMN * 2; i > y; i--) {
+                System.out.print(' ');
             }
-            for(int k = 1; k < i; k++){
-                System.out.print("/");
+            for (int j = 0; j < y; j++) {
+                System.out.print('/');
             }
-            if(i != 1){
-                System.out.print("**");
-            }
-            for(int l = 1; l < i; l++){
-                System.out.print("\\");
+            System.out.print("**");
+            for (int k = 0; k < y; k++) {
+                System.out.print('\\');
             }
             System.out.println();
         }
     }
-    public static void TopBody() {
-
-    }
-    public static void BottomBody() {
-
-    }
-    public static void line() {
+    private static void line() {
         System.out.print("+");
-        for(int i = 0; i < COLUMN-1; i++){
+        for(int i = 0; i < COLUMN * 2; i++){
             System.out.print("=*");
         }
-        System.out.print("+");
-        System.out.println();
+        System.out.println("+");
+    }
+    private static void TopHalf() {
+        for (int y = 0; y < COLUMN; y++) {
+            System.out.print("|");
+            for(int l = 0; l < 2; l++) {
+                for (int i = COLUMN - 1; i > y; i--) {
+                    System.out.print('.');
+                }
+                for (int j = 0; j <= y; j++) {
+                    System.out.print("/\\");
+                }
+                for (int i = COLUMN - 1; i > y; i--) {
+                    System.out.print('.');
+                }
+            }
+            System.out.print("|");
+            System.out.println();
+        }
+    }
+    private static void BottomHalf() {
+        for (int y = 0; y < COLUMN; y++) {
+            System.out.print("|");
+            for(int l = 0; l < 2; l++) {
+                for (int i = 0; i < y; i++) {
+                    System.out.print('.');
+                }
+                for (int j = COLUMN; j > y; j--) {
+                    System.out.print("\\/");
+                }
+                for (int i = 0; i < y; i++) {
+                    System.out.print('.');
+                }
+            }
+            System.out.print("|");
+            System.out.println();
+        }
     }
 }
