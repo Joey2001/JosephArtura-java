@@ -1,5 +1,20 @@
+/*
+* **********************************
+* Joseph Artura
+*
+* AP CS A
+*
+* Period 1
+*
+* October 3, 2018
+*
+* RocketShip Assignment
+*
+* *********************************
+* */
+
 public class RocketShip {
-    private static final int COLUMN = 7;
+    private static final int COLUMN = 3;
     public static void main(String[] args) {
         Cone();
         line();
