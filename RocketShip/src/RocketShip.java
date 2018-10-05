@@ -44,7 +44,6 @@ public class RocketShip {
                 System.out.print('\\');
             //goes to the next line to generate the next part of the cone
             System.out.println();
-            
         }
     }
     private static void line() {
