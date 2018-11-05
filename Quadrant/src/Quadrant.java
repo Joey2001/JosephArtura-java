@@ -8,7 +8,7 @@ public class Quadrant {
         System.out.println(quadrant(0,1));
         System.out.println(quadrant(1,0));
     }
-    public static String quadrant(int x, int y){
+    private static String quadrant(int x, int y){
         if(x > 0){
             if(y > 0){
                 return "Quadrant 1";
