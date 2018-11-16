@@ -41,20 +41,29 @@ public class Rochambeau {
             ran.setSeed(System.currentTimeMillis());
             //initializing the while loop to check if it's not past round three and either the human or computer has less than two points
             while ((round < 3) && ((huPts < 2) && (compPts < 2))) {
+                //This is the prompt for the user to choose rock paper or scissors
                 System.out.println("Rock, paper, or scissors?");
+                //sets the input to a string all in lower case
                 String huSrg = human.next().toLowerCase();
-
+                //initializes the random integer that has a maximum value of 3
                 int randInt = ran.nextInt(3);
-
+                //checks if the input is rock and sets the variable a to 0
                 if (huSrg.equals("rock")) {
                     a = 0;
-                } else if (huSrg.equals("paper")) {
-                    a = 1;
-                } else if (huSrg.equals("scissors")) {
-                    a = 2;
-                } else {
-                    a = 3;
                 }
+                //checks if the input is paper and sets the variable a to 1
+                else if (huSrg.equals("paper")) {
+                    a = 1;
+                }
+                //checks if the input is scissors and sets the variable a to 2
+                else if (huSrg.equals("scissors")) {
+                    a = 2;
+                }
+                //checks if the input is incorrect and sets the variable a to -1
+                else {
+                    a = -1;
+                }
+                //checks if it is less than, equal to, or greater than the random integer assigned to the computer
                 if (a > randInt) {
                     if(huPts < 2) {
                         System.out.println("You win this round.");
@@ -74,8 +83,10 @@ public class Rochambeau {
                         System.out.println("You won the game!");
                     }
                 }
+                //increments the round count
                 round++;
             }
+            //prompts the user if they want to play again
             System.out.println("Do you want to play again?");
         }
     }
