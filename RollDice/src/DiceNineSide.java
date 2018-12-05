@@ -1,28 +1,26 @@
+import java.util.Arrays;
 import java.util.Scanner;
 public class DiceNineSide {
-    private static int DICENUM = 10;
+    private static final int DICENUM = 10;
+    private static final Scanner in = new Scanner(System.in);
     public static void main(String[] args) {
         int count = 0;
-        Scanner in = new Scanner(System.in);
         String play = "yes";
         String[][] setOfDice = constructDice();
+        checkDiceNum();
         while (play.equalsIgnoreCase("yes")){
             printDice(constructDice());
             String[][] diceSet = new String[DICENUM][DICENUM];
-            for(int i = 1; i <= DICENUM; i++){
-                int roll = (int) Math.round(Math.random() * (constructDice().length - 1));
-                diceSet[i - 1] = setOfDice[roll];
-            }
+            int[] storeInt = new int[DICENUM];
+            int[] averageInt = new int[1];
+            rollDice(diceSet, setOfDice, storeInt);
             printDice(diceSet);
+            System.out.println(Arrays.toString(storeInt));
             count++;
-            System.out.println("Do you want to play again?");
-            play = in.next();
-            line();
+            checkPlay();
+            line(constructDice());
         }
-        if(count == 1)
-            System.out.println("You rolled once.");
-        if(count > 1)
-            System.out.println("You have rolled " + count + " times.");
+        countNum(count);
     }
     private static String[][] constructDice(){
         String topBot = " --------- ";
@@ -53,9 +51,33 @@ public class DiceNineSide {
             System.out.println();
         }
     }
-    private static void line(){
+    private static void line(String[][] allDice){
         for(int i = 0; i < 14 * DICENUM; i++)
             System.out.print("-");
         System.out.println();
+    }
+    private static int[] rollDice(String[][] diceSet, String[][] setOfDice, int[] storeInt){
+        for(int i = 1; i <= DICENUM; i++){
+            int roll = (int) Math.round(Math.random() * (constructDice().length - 1));
+            diceSet[i - 1] = setOfDice[roll];
+            storeInt[i - 1] = roll + 1;
+        }
+        return storeInt;
+    }
+    private static void checkDiceNum(){
+        if(DICENUM <= 0){
+            System.exit(-2);
+        }
+    }
+    private static String countNum(int count){
+        if(count == 1)
+            return "You rolled once.";
+        else
+            return "You have rolled " + count + " times.";
+    }
+    private static String checkPlay(){
+        System.out.println("Do you want to play again?");
+        String play = in.next();
+        return play;
     }
 }
