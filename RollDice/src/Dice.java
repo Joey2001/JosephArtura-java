@@ -6,9 +6,9 @@
  *
  * Period 1
  *
- * November 14, 2018
+ * December 6, 2018
  *
- * Rochambeau Assignment
+ * Dice Assignment
  *
  * *********************************
  * */
