@@ -2,23 +2,30 @@ import java.util.*;
 public class DiceNineSide {
     private static final int DICENUM = 10;
     private static final Scanner in = new Scanner(System.in);
+    private static final int LIMIT = 10000000;
     public static void main(String[] args) {
         int count = 0;
+        int[] averageInt = new int[LIMIT];
         String play = "yes";
         String[][] setOfDice = constructDice();
         checkDiceNum();
-        while (play.equalsIgnoreCase("yes")){
-            printDice(constructDice());
+        //play.equalsIgnoreCase("yes")
+        while (count < LIMIT){
+            //printDice(constructDice());
             String[][] diceSet = new String[DICENUM][DICENUM];
             int[] storeInt = new int[DICENUM];
-            int[] averageInt = new int[1];
+            int sum = 0;
             rollDice(diceSet, setOfDice, storeInt);
-            printDice(diceSet);
-            System.out.println(Arrays.toString(storeInt));
-            count++; System.out.println("Do you want to play again?");
-            play = in.next();
-            line();
+            //printDice(diceSet);
+            for(int i = 0; i < storeInt.length; i++){
+                sum += storeInt[i];
+            }
+            averageInt[count] = sum;
+            count++;
+            //play = in.next();
+            //line();
         }
+        numberCount(averageInt);
         countNum(count);
     }
     private static String[][] constructDice(){
@@ -73,5 +80,18 @@ public class DiceNineSide {
             System.out.println("You rolled once.");
         else
             System.out.println("You have rolled " + count + " times.");
+    }
+    private static void numberCount(int[] countDice){
+        int[] count = new int[LIMIT];
+        for(int i = 0; i < countDice.length; i++){
+            count[countDice[i] - 1]++;
+        }
+        for(int i = DICENUM - 1; i < (DICENUM * constructDice().length); i++){
+            if(count[i] != 1){
+                System.out.println("You rolled a " + (i + 1) + " - " + count[i] + " times.");
+            }else{
+                System.out.println("You rolled a " + (i + 1) + " - 1 time.");
+            }
+        }
     }
 }
