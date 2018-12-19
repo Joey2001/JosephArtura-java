@@ -26,16 +26,16 @@ public class Calculator {
     }
 
     private static void stringParse(String string) {
-        String word = "";
+        StringBuilder word = new StringBuilder();
         int count = 0;
         String[] numberHold = new String[5];
         for (int i = 0; i < string.length(); i++) {
             if (string.charAt(i) != ' ' && string.charAt(i) != '_') {
-                word += string.charAt(i);
+                word.append(string.charAt(i));
             } else {
-                numberHold[count] = word;
+                numberHold[count] = word.toString();
                 count++;
-                word = "";
+                word = new StringBuilder();
             }
         }
         String fraction;
@@ -61,16 +61,16 @@ public class Calculator {
             wholeNum = 0;
             wholeNum2 = 0;
         }
-        String word2 = "";
+        StringBuilder word2 = new StringBuilder();
         int count2 = 0;
         String[] fractionHold = new String[4];
         for (int i = 0; i < fraction.length(); i++) {
             if (fraction.charAt(i) != '/') {
-                word2 += fraction.charAt(i);
+                word2.append(fraction.charAt(i));
             } else {
-                fractionHold[count2] = word2;
+                fractionHold[count2] = word2.toString();
                 count2++;
-                word2 = "";
+                word2 = new StringBuilder();
             }
         }
         int A = Integer.parseInt(fractionHold[0]);
@@ -84,7 +84,7 @@ public class Calculator {
             System.out.println(add(A, B, C, D));
         }else if(sign[0].equals("-")){
             System.out.println(subtract(A, B, C, D));
-        }else if(sign[0].equals("*")){
+        }else if(sign[0].equals("*") || sign[0].equalsIgnoreCase("x")){
             System.out.println(multiply(A, B, C, D));
         }else if(sign[0].equals("/")){
             System.out.println(divide(A, B, C, D));
