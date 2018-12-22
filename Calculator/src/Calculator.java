@@ -7,96 +7,94 @@
  * Fraction Calculator
  *****************************************************
  */
-
-import java.util.Arrays;
-import java.util.Scanner;
-
-public class Calculator {
+import java.util.*;
+public class Calculator{
     public static void main(String[] args) {
+        String playCalc = "yes";
         Scanner in = new Scanner(System.in);
-        Scanner out = new Scanner(System.in);
-        String looper = "yes";
-        while (looper.equalsIgnoreCase("yes") || looper.equalsIgnoreCase("Y")) {
-            System.out.println("Enter any fraction to add, subtract, multiply or divide:");
-            String input = in.nextLine() + " ";
-            stringParse(input);
+        while(playCalc.equalsIgnoreCase("yes")){
+            System.out.println("Enter any expression to add, subtract, multiply or divide: ");
+            String fraction1 = in.next();
+            String operation = in.next();
+            String fraction2 = in.next();
+            parseString(fraction1, operation, fraction2);
             System.out.println("Do you want to continue?");
-            looper = out.next();
+            playCalc = in.next();
         }
+        System.out.println("Goodbye.");
     }
-
-    private static void stringParse(String string) {
-        StringBuilder word = new StringBuilder();
-        int count = 0;
-        String[] numberHold = new String[5];
-        for (int i = 0; i < string.length(); i++) {
-            if (string.charAt(i) != ' ' && string.charAt(i) != '_') {
-                word.append(string.charAt(i));
-            } else {
-                numberHold[count] = word.toString();
-                count++;
-                word = new StringBuilder();
-            }
+    private static void parseString(String frac1, String operand, String frac2){
+        int wholeNum1;
+        int numerator;
+        int denominator;
+        if(frac1.contains("_")){
+            wholeNum1 = Integer.parseInt(frac1.substring(0,frac1.indexOf("_")));
+            numerator = Integer.parseInt(frac1.substring(frac1.indexOf("_")+1,frac1.indexOf("/")));
+            denominator = Integer.parseInt(frac1.substring(frac1.indexOf("/")+1));
+            numerator = (wholeNum1 * denominator)+ numerator;
+        } else if(frac1.contains("/")) {
+            numerator = Integer.parseInt(frac1.substring(0,frac1.indexOf("/")));
+            denominator = Integer.parseInt(frac1.substring(frac1.indexOf("/")+1));
+        } else {
+            wholeNum1 = Integer.parseInt(frac1);
+            numerator = wholeNum1;
+            denominator = 1;
         }
-        String fraction;
-        int wholeNum;
         int wholeNum2;
-        String[] sign;
-        if(numberHold[4] != null) {
-            String a = numberHold[numberHold.length / 2];
-            String b = numberHold[0];
-            String c = numberHold[1];
-            numberHold[0] = a;
-            numberHold[1] = b;
-            numberHold[2] = c;
-            String[] num = Arrays.copyOfRange(numberHold, 1, numberHold.length);
-            sign = Arrays.copyOfRange(numberHold, 0, 1);
-            fraction = num[1] + "/" + num[3] + "/";
-            wholeNum = Integer.parseInt(num[0]);
-            wholeNum2 = Integer.parseInt(num[2]);
-        }else{
-            String[] shortNum = Arrays.copyOfRange(numberHold, 0, 3);
-            sign = Arrays.copyOfRange(shortNum, 1,2);
-            fraction = shortNum[0] + "/" + shortNum[2] + "/";
-            wholeNum = 0;
-            wholeNum2 = 0;
+        int numerator2;
+        int denominator2;
+        if(frac2.contains("_")){
+            wholeNum2 = Integer.parseInt(frac2.substring(0,frac2.indexOf("_")));
+            numerator2 = Integer.parseInt(frac2.substring(frac2.indexOf("_")+1,frac2.indexOf("/")));
+            denominator2 = Integer.parseInt(frac2.substring(frac2.indexOf("/")+1));
+            numerator2 = wholeNum2 * denominator2 + numerator2;
+        } else if(frac2.contains("/")) {
+            numerator2 = Integer.parseInt(frac2.substring(0,frac2.indexOf("/")));
+            denominator2 = Integer.parseInt(frac2.substring(frac2.indexOf("/")+1));
+        } else {
+            numerator2 = Integer.parseInt(frac2);
+            denominator2 = 1;
         }
-        StringBuilder word2 = new StringBuilder();
-        int count2 = 0;
-        String[] fractionHold = new String[4];
-        for (int i = 0; i < fraction.length(); i++) {
-            if (fraction.charAt(i) != '/') {
-                word2.append(fraction.charAt(i));
-            } else {
-                fractionHold[count2] = word2.toString();
-                count2++;
-                word2 = new StringBuilder();
-            }
-        }
-        int A = Integer.parseInt(fractionHold[0]);
-        int B = Integer.parseInt(fractionHold[1]);
-        int C = Integer.parseInt(fractionHold[2]);
-        int D = Integer.parseInt(fractionHold[3]);
-        A += (wholeNum * B);
-        C += (wholeNum2 * D);
-        System.out.print("The answer is: ");
-        if(sign[0].equals("+")){
-            System.out.println(add(A, B, C, D));
-        }else if(sign[0].equals("-")){
-            System.out.println(subtract(A, B, C, D));
-        }else if(sign[0].equals("*") || sign[0].equalsIgnoreCase("x")){
-            System.out.println(multiply(A, B, C, D));
-        }else if(sign[0].equals("/")){
-            System.out.println(divide(A, B, C, D));
+        calculations(numerator, numerator2, denominator, denominator2, operand);
+    }
+    private static void calculations(int num1, int num2, int denom1, int denom2, String op) {
+        if(op.equals("+")){
+            System.out.println(add(num1, num2, denom1, denom2));
+        } else if(op.equals("-")) {
+            num2 = -1 * num2;
+            System.out.println(add(num1, num2, denom1, denom2));
+        } else if(op.equals("*") || op.equalsIgnoreCase("x")) {
+            System.out.println(multiply(num1, num2, denom1, denom2));
+        } else if(op.equals("/")){
+            int temp = denom2;
+            denom2 = num2;
+            num2 = temp;
+            System.out.println(multiply(num1, num2, denom1, denom2));
         }else{
-            System.out.println("Please enter valid signs.");
+            System.out.println("Please enter valid characters.");
         }
     }
-    private static String add(final int firstNume, final int firstDenom, final int secondNume, final int secondDenom) {
-        int commonFactor = 1;
+    private static String add(int num1, int num2, int denom1, int denom2) {
+        int numerator = (num1 * denom2) + (num2 * denom1);
+        int denominator = denom1 * denom2;
+        int commonFactor = commonFactor(numerator, denominator);
+        numerator /= commonFactor;
+        denominator /= commonFactor;
+        int wholeNum = wholeNumReturn(numerator, denominator, 0);
+        return stringReturn(wholeNum, numerator, denominator, "");
+    }
+    private static String multiply(int num1, int num2, int denom1, int denom2) {
+        int numerator = num1 * num2;
+        int denominator = denom1 * denom2;
+        int commonFactor = commonFactor(numerator, denominator);
+        numerator /= commonFactor;
+        denominator /= commonFactor;
+        int wholeNum = wholeNumReturn(numerator, denominator, 0);
+        return stringReturn(wholeNum, numerator, denominator, "");
+    }
+    private static int commonFactor(int numerator, int denominator){
         int limit;
-        int numerator = ((firstNume * secondDenom) - (-1 * secondNume * firstDenom));
-        int denominator = (secondDenom * firstDenom);
+        int commonFactor = 1;
         if(numerator > denominator){
             limit = numerator;
         }else{
@@ -109,130 +107,22 @@ public class Calculator {
                 }
             }
         }
-        numerator /= commonFactor;
-        denominator /= commonFactor;
-        int wholeNumCount = 0;
-        while(numerator > denominator){
-            numerator -= denominator;
-            wholeNumCount++;
-        }
-        if(wholeNumCount > 0 && numerator % denominator != 0) {
-            return wholeNumCount + "_" + numerator + "/" + denominator;
-        }else if(numerator % denominator == 0){
-            int wholeNum = numerator / denominator;
-            return (wholeNum + wholeNumCount) + "";
-        }else if(numerator == 0){
-            return "0";
-        }else{
-            return numerator + "/" + denominator;
-        }
+        return commonFactor;
     }
-
-    private static String subtract(final int firstNume, final int firstDenom, final int secondNume, final int secondDenom) {
-        int commonFactor = 1;
-        int limit;
-        int numerator = ((firstNume * secondDenom) - (secondNume * firstDenom));
-        int denominator = (secondDenom * firstDenom);
-        if(numerator > denominator){
-            limit = numerator;
-        }else{
-            limit = denominator;
-        }
-        if((numerator % denominator) != 0) {
-            for (int i = 2; i < limit; i++) {
-                if (numerator % i == 0 && denominator % i == 0 && commonFactor % i != 0) {
-                    commonFactor *= i;
-                }
-            }
-        }
-        numerator /= commonFactor;
-        denominator /= commonFactor;
-        int wholeNumCount = 0;
-        while(numerator > denominator){
+    private static int wholeNumReturn(int numerator, int denominator, int wholeNum){
+        while(numerator >= denominator){
+            wholeNum++;
             numerator -= denominator;
-            wholeNumCount++;
         }
-        if(wholeNumCount > 0 && numerator % denominator != 0) {
-            return wholeNumCount + "_" + numerator + "/" + denominator;
-        }else if(numerator % denominator == 0){
-            int wholeNum = numerator / denominator;
-            return (wholeNum + wholeNumCount) + "";
-        }else if(numerator == 0){
-            return "0";
-        }else{
-            return numerator + "/" + denominator;
-        }
+        return wholeNum;
     }
-
-    private static String multiply(final int firstNume, final int firstDenom, final int secondNume, final int secondDenom) {
-        int commonFactor = 1;
-        int limit;
-        int numerator = (firstNume * secondNume);
-        int denominator = (firstDenom * secondDenom);
-        if(numerator > denominator){
-            limit = numerator;
-        }else{
-            limit = denominator;
-        }
-        if((numerator % denominator) != 0) {
-            for (int i = 2; i < limit; i++) {
-                if (numerator % i == 0 && denominator % i == 0 && commonFactor % i != 0) {
-                    commonFactor *= i;
-                }
-            }
-        }
-        numerator /= commonFactor;
-        denominator /= commonFactor;
-        int wholeNumCount = 0;
-        while(numerator > denominator){
-            numerator -= denominator;
-            wholeNumCount++;
-        }
-        if(wholeNumCount > 0 && numerator % denominator != 0) {
-            return wholeNumCount + "_" + numerator + "/" + denominator;
-        }else if(numerator % denominator == 0){
-            int wholeNum = numerator / denominator;
-            return (wholeNum + wholeNumCount) + "";
-        }else if(numerator == 0){
-            return "0";
-        }else{
-            return numerator + "/" + denominator;
-        }
-    }
-
-    private static String divide(final int firstNume, final int firstDenom, final int secondNume, final int secondDenom) {
-        int commonFactor = 1;
-        int limit;
-        int numerator = (firstNume * secondDenom);
-        int denominator = (firstDenom * secondNume);
-        if(numerator > denominator){
-            limit = numerator;
-        }else{
-            limit = denominator;
-        }
-        if((numerator % denominator) != 0) {
-            for (int i = 2; i < limit; i++) {
-                if (numerator % i == 0 && denominator % i == 0 && commonFactor % i != 0) {
-                    commonFactor *= i;
-                }
-            }
-        }
-        numerator /= commonFactor;
-        denominator /= commonFactor;
-        int wholeNumCount = 0;
-        while(numerator > denominator){
-            numerator -= denominator;
-            wholeNumCount++;
-        }
-        if(wholeNumCount > 0 && numerator % denominator != 0) {
-            return wholeNumCount + "_" + numerator + "/" + denominator;
-        }else if(numerator % denominator == 0){
-            int wholeNum = numerator / denominator;
-            return (wholeNum + wholeNumCount) + "";
-        }else if(numerator == 0){
-            return "0";
-        }else{
-            return numerator + "/" + denominator;
-        }
+    private static String stringReturn(int wholeNum, int numerator, int denominator, String answer){
+        if(wholeNum != 0)
+            answer += wholeNum;
+        else
+            answer += numerator + "/" + denominator;
+        if(numerator == 0)
+            answer = "0";
+        return answer;
     }
 }
