@@ -12,7 +12,7 @@ public class calc{
     public static void main(String[] args) {
         String playCalc = "yes";
         Scanner in = new Scanner(System.in);
-        while(playCalc.equalsIgnoreCase("yes")){
+        while(playCalc.equalsIgnoreCase("yes") || playCalc.equalsIgnoreCase("y")){
             System.out.println("Enter any expression to add, subtract, multiply or divide: ");
             String fraction1 = in.next();
             String operation = in.next();
