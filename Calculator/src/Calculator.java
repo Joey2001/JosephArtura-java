@@ -27,7 +27,6 @@ public class Calculator {
         String word = "";
         int count = 0;
         String[] numberHold = new String[5];
-        string.replace('_', ' ');
         for (int i = 0; i < string.length(); i++) {
             if (string.charAt(i) != ' ' && string.charAt(i) != '_') {
                 word += string.charAt(i);
@@ -38,7 +37,15 @@ public class Calculator {
                 word = "";
             }
         }
-        System.out.println(Arrays.toString(numberHold));
+        String a = numberHold[0];
+        String b = numberHold[1];
+        numberHold[0] = numberHold[(numberHold.length / 2)];
+        numberHold[(numberHold.length / 2)] = b;
+        numberHold[1] = a;
+        String[] numString = Arrays.copyOfRange(numberHold,1, numberHold.length);
+        String[] sign = Arrays.copyOfRange(numberHold, 0, 1);
+        System.out.print(Arrays.toString(sign) + '\t');
+        System.out.println(Arrays.toString(numString));
     }
     public static String add(final int firstNume, final int firstDenom, final int secondNume, final int secondDenom) {
             return "";
