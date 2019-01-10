@@ -7,13 +7,18 @@
  * Fraction Calculator
  *****************************************************
  */
+//imports the java.util library for everything I need
 import java.util.*;
 public class calc{
     public static void main(String[] args) {
+        //initializes playCalc to yes to initially enter the while loop
         String playCalc = "yes";
+        //initializes the scanner called 'in'
         Scanner in = new Scanner(System.in);
+        //while loop to test if the input equals yes or y
         while(playCalc.equalsIgnoreCase("yes") || playCalc.equalsIgnoreCase("y")){
             System.out.println("Enter any expression to add, subtract, multiply or divide: ");
+            //sets the strings below to the input
             String fraction1 = in.next();
             String operation = in.next();
             String fraction2 = in.next();
@@ -31,9 +36,9 @@ public class calc{
         int numerator2;
         int denominator2;
         if(frac1.contains("_")){
-            wholeNum1 = Integer.parseInt(frac1.substring(0,frac1.indexOf("_")));
-            numerator = Integer.parseInt(frac1.substring(frac1.indexOf("_")+1,frac1.indexOf("/")));
-            denominator = Integer.parseInt(frac1.substring(frac1.indexOf("/")+1));
+            wholeNum1 = parseWholeNum(frac1);
+            numerator = parseNumerator(frac1);
+            denominator = parseDenominator(frac1);
             numerator = (wholeNum1 * denominator)+ numerator;
         } else if(frac1.contains("/")) {
             numerator = Integer.parseInt(frac1.substring(0,frac1.indexOf("/")));
@@ -44,18 +49,27 @@ public class calc{
             denominator = 1;
         }
         if(frac2.contains("_")){
-            wholeNum2 = Integer.parseInt(frac2.substring(0,frac2.indexOf("_")));
-            numerator2 = Integer.parseInt(frac2.substring(frac2.indexOf("_")+1,frac2.indexOf("/")));
-            denominator2 = Integer.parseInt(frac2.substring(frac2.indexOf("/")+1));
+            wholeNum2 = parseWholeNum(frac2);
+            numerator2 = parseNumerator(frac2);
+            denominator2 = parseDenominator(frac2);
             numerator2 = wholeNum2 * denominator2 + numerator2;
         } else if(frac2.contains("/")) {
-            numerator2 = Integer.parseInt(frac2.substring(0,frac2.indexOf("/")));
-            denominator2 = Integer.parseInt(frac2.substring(frac2.indexOf("/")+1));
+            numerator2 = parseNumerator(frac2);
+            denominator2 = parseDenominator(frac2);
         } else {
             numerator2 = Integer.parseInt(frac2);
             denominator2 = 1;
         }
         calculations(numerator, numerator2, denominator, denominator2, operand);
+    }
+    private static int parseWholeNum(String frac){
+        return Integer.parseInt(frac.substring(0,frac.indexOf("_")));
+    }
+    private static int parseNumerator(String frac){
+        return Integer.parseInt(frac.substring(frac.indexOf("_")+1,frac.indexOf("/")));
+    }
+    private static int parseDenominator(String frac){
+        return Integer.parseInt(frac.substring(frac.indexOf("/")+1));
     }
     private static void calculations(int num1, int num2, int denom1, int denom2, String op) {
         if(op.equals("+")){
