@@ -8,7 +8,7 @@
  *****************************************************
  */
 //imports the java.util library for everything I need
-import java.util.*;
+import java.util.Scanner;
 public class calc{
     public static void main(String[] args) {
         //initializes playCalc to yes to initially enter the while loop
@@ -179,7 +179,7 @@ public class calc{
     }
     private static String stringReturn(int wholeNum, int numerator, int denominator, boolean negativeFrac){
         //initializes the string answer as a blank
-        String answer = "";
+        String answer = "The answer is: ";
         //checks if negative is true
         if(negativeFrac)
             answer += "-";
@@ -194,7 +194,7 @@ public class calc{
             answer += numerator + "/" + denominator;
         //checks if wholenumber is 0 and numerator is 0
         if(numerator == 0 && wholeNum == 0)
-            answer = "0";
+            answer += "0";
         return answer;
     }
 }
