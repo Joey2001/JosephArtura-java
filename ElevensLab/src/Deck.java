@@ -6,9 +6,12 @@ public class Deck {
 
     Deck(String[] rank, String[] suit, int[] value){
         this.cards = new ArrayList<Card>();
-        for(int pos = 0; pos < rank.length; pos++){
-            Card aCard = new Card(rank[pos], suit[pos], value[pos]);
-            this.cards.add(aCard);
+
+        for(int j = 0; j < rank.length; j++){
+            for(int i = 0; i < suit.length; i++){
+                Card aCard = new Card(rank[j], suit[i], value[j]);
+                this.cards.add(aCard);
+            }
         }
         this.deckSize = this.cards.size();
     }
