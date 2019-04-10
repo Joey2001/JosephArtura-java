@@ -52,6 +52,16 @@ public class Deck {
         return printCard;
     }
 
+    static String[][] giveP1Cards(){
+        return new String[][]{printCard[0], printCard[1]};
+    }
+    static String[][] giveP2Cards(){
+        return new String[][]{printCard[2], printCard[3]};
+    }
+    static String[][] giveTableCards(){
+        return new String[][]{printCard[4], printCard[5], printCard[6], printCard[7], printCard[8]};
+    }
+
     @Override
     public String toString(){
         StringBuilder rtn = new StringBuilder("size = " + deckSize + "\nCards not dealt: \n");
