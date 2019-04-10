@@ -8,7 +8,9 @@ public class PokerTester {
         Deck deck = new Deck(ranks, suits, pointValues);
 
         CardMaker.printCard(CardMaker.constructCard());
-        System.out.println();
         CardMaker.printCard(Deck.giveShuffle());
+        CardMaker.printCard(Deck.giveP1Cards());
+        CardMaker.printCard(Deck.giveP2Cards());
+        CardMaker.printCard(Deck.giveTableCards());
     }
 }
