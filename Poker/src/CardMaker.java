@@ -2,8 +2,8 @@ class CardMaker{
 
     static String[][] constructCard(){
         String topBot = " ------- ";
-        String E = "|       |";
 
+        String[] E     = {"|       |", "|       |", "|       |", "|       |"};
         String[] one   = {"|   ♥   |", "|   ♣   |", "|   ♦   |", "|   ♠   |"};
         String[] two   = {"| ♥   ♥ |", "| ♣   ♣ |", "| ♦   ♦ |", "| ♠   ♠ |"};
         String[] three = {"| ♥ ♥ ♥ |", "| ♣ ♣ ♣ |", "| ♦ ♦ ♦ |", "| ♠ ♠ ♠ |"};
@@ -12,49 +12,36 @@ class CardMaker{
         String[] right = {"| J     |", "| Q     |", "| K     |"};
         String[] left  = {"|     J |", "|     Q |", "|     K |"};
 
-        String[][] parts = {{"|       |"}, one, two, three, four, right, left};
+        String[][] parts = {E, one, two, three, four, right, left};
         String[][] e = new String[52][5];
 
         int notCount = 0;
-        int count = 0;
+        int count = -1;
         int falseLoop;
-        int JQK = 0;
-        int JQK2 = 0;
+        int[] JQK = {0, 0};
         for(int i = 0; i < e.length; i++){
-            if(i % 13 == 0 && i != 0){
+            if(i % 13 == 0){
                 count++;
                 notCount = 0;
             }
+            falseLoop = (i - (count * 13));
+
             for(int j = 0; j < e[i].length; j++){
-                falseLoop = (i - (count * 13));
 
                 if(j == 0 || j == 4){
                     e[i][j] = topBot;
                 }else if(j == 2){
-                    if((falseLoop % 2 == 0 && falseLoop != 5 && (falseLoop < 10)) || (falseLoop == 0 && i !=0)){
+                    if((falseLoop % 2 == 0 && falseLoop < 10) || (falseLoop == 5 || falseLoop == 9)){
                         notCount++;
-                        if(notCount == 0){
-                            e[i][j] = parts[notCount][0];
-                        }else{
-                            e[i][j] = parts[notCount][count];
-                        }
-                    }else if(falseLoop == 5 || falseLoop == 9){
-                        notCount++;
-                        e[i][j] = parts[notCount][count];
                     }else if(falseLoop > 9){
                         notCount = 1;
-                        e[i][j] = parts[1][count];
                     }else{
                         notCount--;
-                        if(notCount == 0){
-                            e[i][j] = parts[notCount][0];
-                        }else{
-                            e[i][j] = parts[notCount][count];
-                        }
                     }
+                    e[i][j] = parts[notCount][count];
                 }else{
                     if(falseLoop == 0){
-                        e[i][j] = E;
+                        e[i][j] = E[count];
                     }else if(falseLoop < 3){
                         e[i][j] = parts[1][count];
                     }else if(falseLoop < 7){
@@ -63,17 +50,11 @@ class CardMaker{
                         e[i][j] = parts[3][count];
                     }else{
                         if(j == 1) {
-                            e[i][j] = parts[5][JQK];
-                            JQK++;
-                            if (JQK == 3) {
-                                JQK = 0;
-                            }
+                            e[i][j] = parts[5][JQK[0] % 3];
+                            JQK[0]++;
                         }else{
-                            e[i][j] = parts[6][JQK2];
-                            JQK2++;
-                            if (JQK2 == 3) {
-                                JQK2 = 0;
-                            }
+                            e[i][j] = parts[6][JQK[1] % 3];
+                            JQK[1]++;
                         }
                     }
                 }
