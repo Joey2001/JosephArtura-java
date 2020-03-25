@@ -1,62 +1,52 @@
 class CardMaker{
 
     static String[][] constructCard(){
-        String topBot = " ------- ";
 
-        String[] E     = {"|       |", "|       |", "|       |", "|       |"};
-        String[] one   = {"|   ♥   |", "|   ♣   |", "|   ♦   |", "|   ♠   |"};
-        String[] two   = {"| ♥   ♥ |", "| ♣   ♣ |", "| ♦   ♦ |", "| ♠   ♠ |"};
-        String[] three = {"| ♥ ♥ ♥ |", "| ♣ ♣ ♣ |", "| ♦ ♦ ♦ |", "| ♠ ♠ ♠ |"};
-        String[] four  = {"|♥ ♥ ♥ ♥|", "|♣ ♣ ♣ ♣|", "|♦ ♦ ♦ ♦|", "|♠ ♠ ♠ ♠|"};
+//        initializing and creating Strings and String arrays to fill the 2D string array
+//        used to pass into the deck class
+        String topBot = " ----- ";
+        String[] one = {"|  ♥  |", "|  ♣  |", "|  ♦  |", "|  ♠  |"};
+        String[] JQK = {"J", "Q", "K"};
 
-        String[] right = {"| J     |", "| Q     |", "| K     |"};
-        String[] left  = {"|     J |", "|     Q |", "|     K |"};
+        String[] newR = new String[13];
+        String[] newL = new String[13];
 
-        String[][] parts = {E, one, two, three, four, right, left};
+        newR[0]  = "|A    |";
+        newL[0]  = "|    A|";
+
+        for(int i = 1; i < 10; i++){
+            if(i != 9){
+                newR[i] = "|" + (i + 1) + "    |";
+                newL[i] = "|    " + (i + 1) + "|";
+            }else{
+                newR[i] = "|" + (i + 1) + "   |";
+                newL[i] = "|   " + (i + 1) + "|";
+            }
+        }
+
+        for(int i = 10; i < newR.length; i++){
+            newR[i] = "|" + JQK[i - 10] + "    |";
+            newL[i] = "|    " + JQK[i - 10] + "|";
+        }
+
+        String[][] parts = {one, newR, newL};
         String[][] e = new String[52][5];
 
-        int notCount = 0;
+//        fills the 2D array with the proper String arrays
         int count = -1;
-        int falseLoop;
-        int[] JQK = {0, 0};
         for(int i = 0; i < e.length; i++){
-            if(i % 13 == 0){
+            if(i % 4 == 0)
                 count++;
-                notCount = 0;
-            }
-            falseLoop = (i - (count * 13));
-
             for(int j = 0; j < e[i].length; j++){
 
                 if(j == 0 || j == 4){
                     e[i][j] = topBot;
                 }else if(j == 2){
-                    if((falseLoop % 2 == 0 && falseLoop < 10) || (falseLoop == 5 || falseLoop == 9)){
-                        notCount++;
-                    }else if(falseLoop > 9){
-                        notCount = 1;
-                    }else{
-                        notCount--;
-                    }
-                    e[i][j] = parts[notCount][count];
+                    e[i][j] = parts[0][i % 4];
+                }else if(j == 3){
+                    e[i][j] = parts[2][count];
                 }else{
-                    if(falseLoop == 0){
-                        e[i][j] = E[count];
-                    }else if(falseLoop < 3){
-                        e[i][j] = parts[1][count];
-                    }else if(falseLoop < 7){
-                        e[i][j] = parts[2][count];
-                    }else if(falseLoop < 10){
-                        e[i][j] = parts[3][count];
-                    }else{
-                        if(j == 1) {
-                            e[i][j] = parts[5][JQK[0] % 3];
-                            JQK[0]++;
-                        }else{
-                            e[i][j] = parts[6][JQK[1] % 3];
-                            JQK[1]++;
-                        }
-                    }
+                    e[i][j] = parts[1][count];
                 }
             }
         }
@@ -64,9 +54,11 @@ class CardMaker{
     }
 
     static void printCard(String[][] card){
+//        prints each section of each card in such a way that the
+//        result is all of the card being printed from left to right
         for(int i = 0; i < card[0].length; i++){
             for (String[] aCard : card)
-                System.out.print(aCard[i]);
+                System.out.print(aCard[i] + "      ");
             System.out.println();
         }
     }

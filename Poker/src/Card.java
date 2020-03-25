@@ -1,36 +1,34 @@
 public class Card {
+    //initializes internal variables that are passed to the card class
     private String suit;
     private String rank;
     private int value;
+    private String[] prints;
 
-    Card(String rank, String suit, int value){
+    Card(String rank, String suit, int value, String[] prints){
         this.suit = suit;
         this.rank = rank;
         this.value = value;
+        this.prints = prints;
     }
 
+    //    returns the value of the suit
     String Suit(){
         return suit;
     }
 
-    String Rank(){
-        return rank;
-    }
-
+    //    returns value of the card
     int Value(){
         return value;
     }
 
-    boolean Compare(Card card){
-        boolean cardSuit = card.suit.equals(this.suit);
-        boolean cardRank = card.rank.equals(this.rank);
-        boolean cardValue = card.value == this.value;
-        return cardSuit && cardRank && cardValue;
-
+    //    returns the string array of the card to print
+    String[] Print(){
+        return prints;
     }
 
     @Override
     public String toString(){
-        return rank + " of " + suit + " (point value = " + value + ")";
+        return rank + " of " + suit + " (point value = " + value + ")" /*+ Arrays.toString(prints)*/;
     }
 }

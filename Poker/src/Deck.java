@@ -1,65 +1,58 @@
 import java.util.ArrayList;
 
 public class Deck {
-    private static String[][] printCard;
-    private ArrayList<Card> cards;
+    //    initializes internal variables
+    private static ArrayList<Card> cards;
     private int deckSize;
 
-    Deck(String[] rank, String[] suit, int[] value){
-        this.cards = new ArrayList<>();
+    Deck(String[] rank, String[] suit, int[] value, String[][] prints){
+//        initializes the cards array list every time the deck class is initialized
+        cards = new ArrayList<>();
 
-        for(int j = 0; j < rank.length; j++){
+//        variable to properly store the prints
+        int z = 0;
+        for(int j = 0; j < rank.length; j++) {
             for (String aSuit : suit) {
-                Card aCard = new Card(rank[j], aSuit, value[j]);
-                this.cards.add(aCard);
+                Card aCard = new Card(rank[j], aSuit, value[j], prints[z]);
+                z++;
+                cards.add(aCard);
             }
         }
-        this.deckSize = this.cards.size();
-        printCard = CardMaker.constructCard();
+        this.deckSize = cards.size();
         Shuffle();
+
     }
 
-    boolean isEmpty(){
-        return cards.size() == 0;
-    }
-
-    int size(){
-        return this.cards.size();
-    }
-
-    Card deal(){
-        if(this.deckSize > 0){
-            this.deckSize--;
-            return this.cards.get(this.deckSize);
-        }
-        return null;
-    }
-
+    //    shuffles the cards into a random order
     private void Shuffle(){
-        for(int k = cards.size() - 1; k >= 0; k--) {
-            int r = (int)(Math.random() * k);
-            Card tempCard = cards.get(r);
-            cards.set(r, cards.get(k));
-            cards.set(k, tempCard);
-
-            String[] tempPrn = printCard[r];
-            printCard[r] = printCard[k];
-            printCard[k] = tempPrn;
+//        determines how many times the deck is shuffled
+        for(int i = 0; i < Constants.timesToShuffle; i++) {
+//            shuffles the cards by switching two cards at a time
+            for (int k = cards.size() - 1; k >= 0; k--) {
+                int r = (int) (Math.random() * k);
+                Card tempCard = cards.get(r);
+                cards.set(r, cards.get(k));
+                cards.set(k, tempCard);
+            }
         }
     }
 
-    static String[][] giveShuffle(){
-        return printCard;
+    //    passes a card array by giving the player number
+    static Card[] playerCards(int playerNum){
+        Card[] tP = new Card[2];
+//        fills the array with the appropriate cards and is done this way to allow for up to 23 players
+        for (int i = 1; i >= 0; i--)
+            tP[1 - i] = cards.get((2 * playerNum) - (i + 1));
+        return tP;
     }
 
-    static String[][] giveP1Cards(){
-        return new String[][]{printCard[0], printCard[1]};
-    }
-    static String[][] giveP2Cards(){
-        return new String[][]{printCard[2], printCard[3]};
-    }
-    static String[][] giveTableCards(){
-        return new String[][]{printCard[4], printCard[5], printCard[6], printCard[7], printCard[8]};
+    //    passes the table cards
+    static Card[] giveJustTable(){
+        Card[] table = new Card[5];
+//        fills the array with the appropriate cards and is done this way to allow for up to 23 players
+        for(int i = table.length - 1; i >= 0; i--)
+            table[i] = cards.get(i + (Constants.numOfPlayers * 2));
+        return table;
     }
 
     @Override
@@ -68,25 +61,20 @@ public class Deck {
 
         for (int i = deckSize - 1; i >= 0; i--) {
             rtn.append(cards.get(i));
-            if (i != 0) {
+            if (i != 0)
                 rtn.append(", ");
-            }
-            if ((deckSize - i) % 2 == 0) {
+            if ((deckSize - i) % 2 == 0)
                 rtn.append("\n");
-            }
         }
 
         rtn.append("\nDealt cards: \n");
         for (int i = cards.size() - 1; i >= deckSize; i--) {
-            if(i >= 0) {
+            if(i >= 0)
                 rtn.append(cards.get(i));
-            }
-            if (i != deckSize) {
+            if (i != deckSize)
                 rtn.append(", ");
-            }
-            if ((i - cards.size()) % 2 == 0) {
+            if ((i - cards.size()) % 2 == 0)
                 rtn.append("\n");
-            }
         }
 
         rtn.append("\n");
